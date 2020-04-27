@@ -1,6 +1,6 @@
-baseURL = "http://example.org/"
+baseURL = "http://wardtalks.com/"
 languageCode = "en-us"
-title = "My New Hugo Site"
+title = "Ward Talks"
 
 
 theme = "bootstrap-bp-hugo-theme"
