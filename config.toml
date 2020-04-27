@@ -8,7 +8,7 @@ theme = "bootstrap-bp-hugo-theme"
 [params]
     customDateFormat = "01/02/2006"
     themeColor = "dark"
-    description = "Some useful information about computers, and stuff...."
+    description = "Here are a bunch of my notes, written in the form of howto/tutorials. The primary purpose of this site is to remind me how to do all this stuff. But, you might find it useful as well."
 
 [author]
     name = "Brian H. Ward"
