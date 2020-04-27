@@ -4,3 +4,15 @@ title = "Ward Talks"
 
 
 theme = "bootstrap-bp-hugo-theme"
+
+[params]
+    customDateFormat = "01/02/2006"
+    themeColor = "dark"
+    description = "Some useful information about computers, and stuff...."
+
+[author]
+    name = "Brian H. Ward"
+
+[social]
+    github = "glyphrider"
+    linkedin = "glyphrider"
