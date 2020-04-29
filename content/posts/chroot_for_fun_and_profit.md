@@ -2,8 +2,7 @@
 layout: post
 title: "chroot for Fun and Profit"
 date:   2019-04-04 12:00:00 -0400
-categories: ubuntu linux commandline
-draft: true
+tags: [ubuntu, linux]
 ---
 A fundamental part of a linux install, `chroot` is a powerful process isolation tool and one of
 the precursors to today's container technology. In this article, I want to quickly cover the basic
