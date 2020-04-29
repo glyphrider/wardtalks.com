@@ -26,7 +26,7 @@ order = [".jpg$", ".gif$"]
 
 [[deployment.targets]]
 # An arbitrary name for this target.
-name = "mydeployment"
+name = "aws"
 # The Go Cloud Development Kit URL to deploy to. Examples:
 # GCS; see https://gocloud.dev/howto/blob/#gcs
 # URL = "gs://<Bucket Name>"
