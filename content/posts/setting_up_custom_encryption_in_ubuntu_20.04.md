@@ -6,7 +6,7 @@ tags: [ubuntu, linux]
 
 This post uses a lot of information from [chroot For Fun and Profit](/posts/chroot_for_fun_and_profit/).
 
-The Ubuntu Linux distribution from Canonical gets a lot of praise; it also gets a lot of complaints. A lot of those complaints have to do with it's installer. To be fair, the desktop installer is pretty good for beginners. It walks you through a series of intelligible steps, sets up a basic system with little or no fuss, and most non-default settings can easily be tweaked after the install. But, there's always an exception....
+The Ubuntu Linux distribution from Canonical gets a lot of praise; it also gets a lot of complaints. A lot of those complaints have to do with its installer. To be fair, the desktop installer is pretty good for beginners. It walks you through a series of intelligible steps, sets up a basic system with little or no fuss, and most non-default settings can easily be tweaked after the install. But, there's always an exception....
 
 The organization of disk storage, especially as it relates to encryption and thin provisioning of logical volumes, is a bit of a mess. If you tell the installer you want to use logical volume management, it complies by creating one logical volume that spans the entire disk. If you tell the installer you want encryption, you wind up with a similarly un-friendly configuration. So, most _advanced users_ choose to manually configure the disks prior to running the installer. But, with encryption, this results in some complexity that needs to be explained.
 
