@@ -1,5 +1,5 @@
 ---
-title: "Custom_encryption_in_pop_os_20"
+title: "Custom Encryption in Pop!_OS 20.04"
 date: 2020-05-01T14:19:10-04:00
 tags: [linux, pop_os]
 ---
