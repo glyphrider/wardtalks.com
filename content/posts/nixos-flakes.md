@@ -36,4 +36,9 @@ that will further lock us into a specific hash of the 23.11 release. So our pack
 are ready to take updates, just use `nix flake update` in the /etc/nixos directory, and the hash for packages will get updated.
 After that point, you should use `nixos-rebuild switch --flake .` to apply the updates.
 
+There is some inconsistency on the internet regarding the *need* to apply the `--flake .` argument to `nixos-rebuild`. Some
+sources imply it is not necessary, and that the inclusion of flakes in the configuration.nix file and the existence of
+flake.nix is sufficient to trigger activation. Others specifically call out the parameter. Certainly, it does provide additional
+flexibility, if the flake.nix file is not in the same directory, or you wish to use a configuration other than your hostname.
+
 
