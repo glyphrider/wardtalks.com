@@ -6,12 +6,10 @@ title = "Ward Talks"
 theme = "bootstrap-bp-hugo-theme"
 
 [params]
+    author.name = "Brian H. Ward"
     customDateFormat = "01/02/2006"
     themeColor = "dark"
     description = "Here are a bunch of my notes, written in the form of howto/tutorials. The primary purpose of this site is to remind me how to do all this stuff. But, you might find it useful as well."
-
-[author]
-    name = "Brian H. Ward"
 
 [social]
     github = "glyphrider"

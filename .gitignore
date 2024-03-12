@@ -2,3 +2,4 @@
 .deploy
 resources
 public
+*.swp
