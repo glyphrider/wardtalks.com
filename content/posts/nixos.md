@@ -92,10 +92,9 @@ appropriately (using those subvolumes we created).
 mkfs.fat -F 32 /dev/sda1
 mkfs.btrfs /dev/mapper/crypt
 mount /dev/mapper/crypt /mnt
-btrfs subv create /mnt/@
-btrfs subv create /mnt/@nix
-btrfs subv create /mnt/@var
-btrfs subv create /mnt/@home
+for sv in @{,nix,var,home}; do
+  btrfs subv create /mnt/@$sv
+done
 umount /mnt
 ```
 
@@ -103,10 +102,10 @@ Now it's time to get everything mounted, and kick off the install.
 
 ```
 mount -o subvol=@ /dev/mapper/crypt /mnt
-mount --mkdir -o subvol=@nix /dev/mapper/crypt /mnt/nix
-mount --mkdir -o subvol=@var /dev/mapper/crypt /mnt/var
-mount --mkdir -o subvol=@home /dev/mapper/crypt /mnt/home
-mount --mkdir /dev/sda1 /mnt/boot
+for sv in {nix,var,home}; do
+  mount --mkdir -o subvol=@$sv /dev/mapper/crypt /mnt/$sv
+done
+mount --mkdir -o umask=0077 /dev/sda1 /mnt/boot
 
 nixos-generate --root /mnt
 ```
@@ -163,10 +162,9 @@ lvcreate -L 32G -n nix nixos
 lvcreate -L 8G -n var nixos
 lvcreate -L 8G -n home nixos
 
-mkfs.ext4 /dev/nixos/system
-mkfs.ext4 /dev/nixos/nix
-mkfs.ext4 /dev/nixos/var
-mkfs.ext4 /dev/nixos/home
+for lv in {system,nix,var,home}; do
+  mkfs.ext4 /dev/nixos/$lv
+done
 ```
 
 Now comes the magical time to mount all the filesystems where we want them, and have NixOS generate an initial configuration.
@@ -174,10 +172,10 @@ We will have to update the configuration to make it work, though.
 
 ```
 mount /dev/nixos/system /mnt
-mount --mkdir /dev/nixos/nix /mnt/nix
-mount --mkdir /dev/nixos/var /mnt/var
-mount --mkdir /dev/nixos/home /mnt/home
-mount --mkdir /dev/sda1 /mnt/boot
+for lv in {nix,var,home}; do
+  mount --mkdir /dev/nixos/$lv /mnt/$lv
+done
+mount --mkdir -o umask=0077 /dev/sda1 /mnt/boot
 
 nixos-generate-config --root /mnt
 ```
@@ -272,7 +270,7 @@ Having created /dev/mapper/system, we can format (I'll use ext4 for simplicity).
 mkfs.ext4 /dev/mapper/system
 
 mount /dev/mapper/system /mnt
-mount --mkdir /dev/sda1 /mnt/boot
+mount --mkdir -o umask=0077 /dev/sda1 /mnt/boot
 ```
 
 Now we can generate the initial configuration.
@@ -361,20 +359,19 @@ Now, we can create ZFS _datasets_ within the zpool. Datasets are like the logica
 _filesystem_ on them).
 
 ```
-zfs create -o mountpoint=legacy nixos/root
-zfs create -o mountpoint=legacy nixos/nix
-zfs create -o mountpoint=legacy nixos/var
-zfs create -o mountpoint=legacy nixos/home
+for ds in {root,nix,var,home}; do
+  zfs create -o mountpoint=legacy nixos/$ds
+done
 ```
 
 Now these datasets can be mounted for the config generation. Also, mount the /boot partition.
 
 ```
 mount -t zfs nixos/root /mnt
-mount --mkdir -t zfs nixos/nix /mnt/nix
-mount --mkdir -t zfs nixos/var /mnt/var
-mount --mkdir -t zfs nixos/home /mnt/home
-mount --mkdir /dev/sda1 /mnt/boot
+for ds in {nix,var,home}; do
+  mount --mkdir -t zfs nixos/$ds /mnt/$ds
+done
+mount --mkdir -o umask=0077 /dev/sda1 /mnt/boot
 ```
 
 Now we can generate the initial config with
@@ -386,17 +383,20 @@ nixos-generate-config --root /mnt
 And edit the config, once again replacing the `boot.loader.systemd-boot.enable = true;` line with the following.
 
 ```
-  boot.loader.systemd-boot.enable = false;
-  boot.loader.grub = {
-    enable = true;
-    zfsSupport = true;
-    efiSupport = true;
-    efiInstallAsRemovable = true;
-    mirroredBoots = [
-      { devices = [ "nodev" ]; path = "/boot"; }
-    ];
+  boot.loader = {
+    systemd-boot.enable = false;
+    grub = {
+      enable = true;
+      zfsSupport = true;
+      efiSupport = true;
+      efiInstallAsRemovable = true;
+      device = "nodev";
+    };
+    efi = {
+      canTouchEfiVariables = false;
+      efiSysMountPoint = "/boot";
+    };
   };
-  boot.loader.efi.canTouchEfiVariables = false;
 
   networking.hostId = "00000000";
 ```
@@ -407,6 +407,8 @@ The networking.hostId is used by ZFS and should be generated with the following
 ```
 head -c4 /dev/urandom | od -A none -t x4
 ```
+
+FWIW, I keep my networking.hostId in a separate networking configuration (.nix); it *can* go anywhere, but you *have to* have one.
 
 # A final word about swap space
 
