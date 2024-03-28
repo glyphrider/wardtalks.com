@@ -6,7 +6,9 @@ draft: false
 
 # Install NixOS via the graphical installer
 
-Nothing _really_ special; just remember to select Allow Non-Free near the end of the (Calamares) installation wizard. Choose the graphical desktop you'd like to use.
+Nothing _really_ special; just remember to select Allow Non-Free near the end of the (Calamares) installation wizard.
+It will be easier if the user created is named "demo", otherwise there is a deviation from the script _later on_.
+Choose the graphical desktop you'd like to use.
 
 # Add a new package to the 
 
@@ -102,6 +104,8 @@ A quick `home-manager switch` will make this a reality.
 The home-manager flake is more complicated than the nixos flake, because home-manager has multiple inputs (home-manager **and** nixpkgs), **and** we want to keep the two closely tied to each other.
 We can start with the template, but here's the full flake.nix file after modifications... or you can just write if from scratch using `vim`
 
+The occurrence of "demo" below corresponds to the presumed username demo. If you have created a different unprivileged user, then replace the existing token with your new name.
+
 ```
 {
   description = "Demo Flake for Home-Manager (Standalone)";
@@ -119,7 +123,7 @@ We can start with the template, but here's the full flake.nix file after modific
     system = "x86_64-linux";
     pkgs = import nixpkgs { system = "${system}"; config.allowUnfree = true; };
   in {
-    homeConfigurations."brian" = home-manager.lib.homeManagerConfiguration {
+    homeConfigurations."demo" = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
 
       modules = [ ./home.nix ];
