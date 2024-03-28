@@ -24,6 +24,14 @@ Then perform a `sudo nixos-rebuild switch`. Show it running!
 
 Exit the nix-shell and show that `vim` goes away from the user environment; remind everyone that the package and its dependencies still exist in /nix/store.
 
+A quick summary of this step:
+1. `nix-shell -p vim`
+1. set hostname to demo by modifying existing declaration to read `networking.hostname = "demo";` in the configuration.nix file
+1. add `google-chrome` to the user's package list in the configuration.nix file
+1. add `nix.settings.experimental-features = [ "flakes" "nix-command" ];` to the bottom of the configuration.nix file
+1. `exit`
+1. [optional] reboot
+
 # Get Flakey!
 
 Change directory into `/etc/nixos` and run `sudo nix flake init` to create a new instance of a basic flake template. Everything in the inputs section is good; the entirety of the outputs section can be replaced with the following:
