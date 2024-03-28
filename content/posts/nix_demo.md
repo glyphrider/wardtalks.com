@@ -158,3 +158,7 @@ Watch all the fun!
 
 The [slides](https://docs.google.com/presentation/d/10nv8q3Tbiq6ngHVmrfGAo73YTRnB-MMvKewtmbTq_P4/edit?usp=sharing)
 are available online.
+
+NixOS Configuration [Search/Wiki](https://search.nixos.org/options)
+
+Home Manager [Options Search](https://home-manager-options.extranix.com)
