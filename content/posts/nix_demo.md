@@ -30,6 +30,7 @@ A quick summary of this step:
 1. add `google-chrome` to the user's package list in the configuration.nix file
 1. add `nix.settings.experimental-features = [ "flakes" "nix-command" ];` to the bottom of the configuration.nix file
 1. `exit`
+1. `nixos-rebuild switch`
 1. [optional] `reboot`
 
 # Get Flakey!
