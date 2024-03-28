@@ -151,4 +151,9 @@ Regardless, now is the time to implement!
 home-manager switch
 ```
 
-What all the fun!
+Watch all the fun!
+
+# Additional Materials/Content
+
+The [slides](https://docs.google.com/presentation/d/10nv8q3Tbiq6ngHVmrfGAo73YTRnB-MMvKewtmbTq_P4/edit?usp=sharing)
+are available online.
