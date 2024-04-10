@@ -93,7 +93,7 @@ mkfs.fat -F 32 /dev/sda1
 mkfs.btrfs /dev/mapper/crypt
 mount /dev/mapper/crypt /mnt
 for sv in @{,nix,var,home}; do
-  btrfs subv create /mnt/@$sv
+  btrfs subv create /mnt/$sv
 done
 umount /mnt
 ```
@@ -107,7 +107,7 @@ for sv in {nix,var,home}; do
 done
 mount --mkdir -o umask=0077 /dev/sda1 /mnt/boot
 
-nixos-generate --root /mnt
+nixos-generate-config --root /mnt
 ```
 
 Due to the simplicity of the configuration (read: its similarity to what the Calamares installer can do), there isn't any special
