@@ -1,0 +1,6 @@
+[Match]
+Name=marisol
+Type=vlan
+
+[Network]
+Bridge=br1

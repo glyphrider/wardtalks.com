@@ -1,0 +1,12 @@
+[Match]
+Name=enp38s0
+Type=ether
+
+[Network]
+VLAN=marisol
+Bridge=br0
+
+LinkLocalAddressing=no
+LLDP=no
+IPv6AcceptRA=no
+IPv6SendRA=no

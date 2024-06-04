@@ -1,0 +1,11 @@
+[Match]
+Name=br1
+
+[Network]
+DHCP=ipv4
+IPForward=yes
+MulticastDNS=yes
+
+[DHCPv4]
+UseDNS=yes
+UseDomains=true
