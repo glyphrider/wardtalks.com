@@ -2,6 +2,7 @@
 title: "Putting This Site's AWS Infrastructure Into Terraform"
 date: 2026-09-15T11:04:05-04:00
 draft: false
+tags: [terraform, aws, hugo, flake.nix, awsume]
 ---
 # Introduction
 

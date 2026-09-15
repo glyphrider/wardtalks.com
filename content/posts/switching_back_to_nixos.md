@@ -2,6 +2,7 @@
 title: "Switching Back to NixOS (Again)"
 date: 2026-09-15T11:30:00-04:00
 draft: false
+tags: [nixos, home-manager, hyprland, flake.nix]
 ---
 # Introduction
 

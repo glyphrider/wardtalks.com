@@ -22,6 +22,20 @@ theme = "bootstrap-bp-hugo-theme"
     linkedin = "glyphrider"
 
 [menu]
+    [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/posts/"
+    weight = 10
+    pre = "<i class='fas fa-newspaper'></i>"
+
+    [[menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
+    weight = 20
+    pre = "<i class='fas fa-tags'></i>"
+
     [[menu.footer]]
     identifier = "posts"
     name = "Posts"
