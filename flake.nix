@@ -24,6 +24,13 @@
             awsume
             terraform
           ];
+
+          # `awsume` must be sourced (not exec'd) so it can export AWS_* env
+          # vars into the calling shell; this function shadows the plain
+          # script of the same name that's on PATH from the package above.
+          shellHook = ''
+            awsume() { source "${pkgs.awsume}/bin/awsume" "$@"; }
+          '';
         };
       });
 }
