@@ -91,3 +91,30 @@ resource "aws_iam_role_policy" "wardtalks_deploy_cloudfront" {
     ]
   })
 }
+
+# Lets the deploy identity push code changes to the existing
+# hugo-url-rewrite Lambda@Edge function (see lambda.tf) without going
+# through terraform apply as admin/terraform. Deliberately excludes
+# CreateFunction/DeleteFunction — creating or removing the function stays a
+# Terraform-only, admin-level operation.
+resource "aws_iam_role_policy" "wardtalks_deploy_lambda" {
+  name = "wardtalks-deploy-lambda"
+  role = aws_iam_role.wardtalks_deploy.name
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "lambda:GetFunction",
+          "lambda:GetFunctionConfiguration",
+          "lambda:UpdateFunctionCode",
+          "lambda:UpdateFunctionConfiguration",
+          "lambda:PublishVersion",
+        ]
+        Resource = aws_lambda_function.hugo_url_rewrite.arn
+      }
+    ]
+  })
+}

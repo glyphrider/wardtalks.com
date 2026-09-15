@@ -2,15 +2,14 @@
 # sobriety.wardtalks.com, a sibling project) and is only referred to here by
 # ARN, in locals.
 #
-# The Lambda@Edge function is likewise managed outside this repo. It rewrites
-# directory-style requests (e.g. "/posts/foo/") to "/posts/foo/index.html" at
-# origin-request time. That rewrite currently does all the work default_root_object
-# would normally do — default_root_object is unset below, matching the live
+# The Lambda@Edge function (see lambda.tf) rewrites directory-style requests
+# (e.g. "/posts/foo/") to "/posts/foo/index.html" at origin-request time.
+# That rewrite currently does all the work default_root_object would
+# normally do — default_root_object is unset below, matching the live
 # distribution — so removing this Lambda would very likely break every page,
 # including "/", not just subdirectories. Confirm that before ever detaching it.
 locals {
   wardtalks_acm_certificate_arn = "arn:aws:acm:us-east-1:475727583260:certificate/d98285d2-01ce-4318-a9ee-7af1130f073b"
-  wardtalks_url_rewrite_lambda_arn = "arn:aws:lambda:us-east-1:475727583260:function:hugo-url-rewrite:3"
 }
 
 data "aws_cloudfront_cache_policy" "caching_optimized" {
@@ -50,18 +49,18 @@ resource "aws_cloudfront_distribution" "wardtalks" {
   }
 
   default_cache_behavior {
-    target_origin_id          = "S3-wardtalks.com"
-    viewer_protocol_policy    = "redirect-to-https"
-    allowed_methods           = ["GET", "HEAD"]
+    target_origin_id           = "S3-wardtalks.com"
+    viewer_protocol_policy     = "redirect-to-https"
+    allowed_methods            = ["GET", "HEAD"]
     cached_methods             = ["GET", "HEAD"]
-    compress                  = false
+    compress                   = false
     cache_policy_id            = data.aws_cloudfront_cache_policy.caching_optimized.id
     origin_request_policy_id   = data.aws_cloudfront_origin_request_policy.cors_s3_origin.id
     response_headers_policy_id = data.aws_cloudfront_response_headers_policy.security_headers.id
 
     lambda_function_association {
       event_type   = "origin-request"
-      lambda_arn   = local.wardtalks_url_rewrite_lambda_arn
+      lambda_arn   = aws_lambda_function.hugo_url_rewrite.qualified_arn
       include_body = false
     }
   }
