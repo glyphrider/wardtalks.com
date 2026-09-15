@@ -1,5 +1,5 @@
 baseURL = "http://wardtalks.com/"
-languageCode = "en-us"
+locale = "en-us"
 title = "Ward Talks"
 
 
