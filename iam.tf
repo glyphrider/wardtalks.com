@@ -60,6 +60,7 @@ resource "aws_iam_role_policy" "wardtalks_deploy_s3" {
         Action = [
           "s3:PutObject",
           "s3:GetObject",
+          "s3:DeleteObject",
           "s3:ListBucket",
         ]
         Resource = [
