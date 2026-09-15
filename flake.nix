@@ -9,7 +9,11 @@
   outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = import nixpkgs { inherit system; };
+        pkgs = import nixpkgs {
+          inherit system;
+          # terraform is licensed under BSL 1.1, which nixpkgs treats as unfree.
+          config.allowUnfree = true;
+        };
       in
       {
         devShells.default = pkgs.mkShell {
@@ -18,6 +22,7 @@
             hugo
             awscli2
             awsume
+            terraform
           ];
         };
       });
